@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXTERNAL NHIZX REI</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    width:100vw;
+    height:100vh;
+    background:#000;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* Fondo partículas */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+/* Panel */
+.panel{
+    width:90%;
+    max-width:380px;
+    background:#111;
+    border-radius:20px;
+    padding:20px;
+    color:white;
+    z-index:1;
+    box-shadow:0 0 25px rgba(0,0,0,0.8);
+}
+
+/* Header */
+.header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.logo{
+    background:#e60000;
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.header h2{
+    font-size:16px;
+}
+
+.header span{
+    font-size:12px;
+    color:#aaa;
+}
+
+/* Items */
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:12px 0;
+}
+
+/* Toggle */
+.toggle{
+    width:46px;
+    height:24px;
+    background:#333;
+    border-radius:20px;
+    position:relative;
+    cursor:pointer;
+}
+
+.toggle::before{
+    content:"";
+    width:20px;
+    height:20px;
+    background:#fff;
+    border-radius:50%;
+    position:absolute;
+    top:2px;
+    left:2px;
+    transition:.3s;
+}
+
+.toggle.active{
+    background:#e60000;
+}
+
+.toggle.active::before{
+    left:24px;
+}
+
+/* Slider */
+.slider-box{
+    margin:15px 0;
+}
+
+.slider-box span{
+    float:right;
+    font-size:12px;
+    color:#aaa;
+}
+
+input[type=range]{
+    width:100%;
+}
+
+/* Botón */
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#e60000;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+footer{
+    text-align:center;
+    margin-top:12px;
+    font-size:12px;
+    color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="panel">
+    <div class="header">
+        <div class="logo">LCW</div>
+        <div>
+            <h2>EXTERNAL NHIZX REI</h2>
+            <span>Painel Externo</span>
+        </div>
+    </div>
+
+    <div class="item">
+        <p>Aimbot</p>
+        <div class="toggle"></div>
+    </div>
+
+    <div class="item">
+        <p>Precisão</p>
+        <div class="toggle"></div>
+    </div>
+
+    <div class="slider-box">
+        <p>Head Limit <span>50%</span></p>
+        <input type="range" value="50">
+    </div>
+
+    <div class="item">
+        <p>Remover tremor da mira</p>
+        <div class="toggle"></div>
+    </div>
+
+    <div class="item">
+        <p>No Recoil</p>
+        <div class="toggle"></div>
+    </div>
+
+    <div class="slider-box">
+        <p>FOV <span>50%</span></p>
+        <input type="range" value="50">
+    </div>
+
+    <button>Injetar Funções</button>
+
+    <footer>© EXTERNAL NHIZX REI</footer>
+</div>
+
+<script>
+// Toggle
+document.querySelectorAll('.toggle').forEach(t=>{
+    t.onclick = ()=> t.classList.toggle('active');
+});
+
+// Partículas
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let particles = [];
+
+for(let i=0;i<80;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*2+1,
+        dx:(Math.random()-0.5)*0.5,
+        dy:(Math.random()-0.5)*0.5
+    });
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="rgba(255,255,255,0.6)";
+    particles.forEach(p=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+        p.x+=p.dx;
+        p.y+=p.dy;
+        if(p.x<0||p.x>canvas.width) p.dx*=-1;
+        if(p.y<0||p.y>canvas.height) p.dy*=-1;
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
